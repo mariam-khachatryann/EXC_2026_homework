@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int nums[] = {1,1,1,2,2,3};
+    int n = 6;
+    int k = 2;
+
+    int count[100] = {0};
+
+    for (int i = 0; i < n; i++) {
+        count[nums[i]]++;
+    }
+
+    for (int i = 0; i < k; i++) {
+        int max = 0;
+        int num = 0;
+
+        for (int j = 0; j < 100; j++) {
+            if (count[j] > max) {
+                max = count[j];
+                num = j;
+            }
+        }
+
+        cout << num << " ";
+        count[num] = 0;
+    }
+}
