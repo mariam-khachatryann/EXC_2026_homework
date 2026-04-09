@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+double computeDerivative(vector<string> funcs, double x) {
+    double value = x;
+    double derivative = 1;
+
+    for (int i = funcs.size() - 1; i >= 0; i--) {
+        if (funcs[i] == "square") {
+            derivative *= 2 * value;
+            value = value * value;
+        }
+        else if (funcs[i] == "sin") {
+            derivative *= cos(value);
+            value = sin(value);
+        }
+        else if (funcs[i] == "exp") {
+            derivative *= exp(value);
+            value = exp(value);
+        }
+        else if (funcs[i] == "log") {
+            derivative *= 1 / value;
+            value = log(value);
+        }
+    }
+
+    return derivative;
+}
+
+int main() {
+    vector<string> funcs = {"sin", "square"};
+    double x = 1.0;
+
+    cout << computeDerivative(funcs, x);
+
+    return 0;
+}
