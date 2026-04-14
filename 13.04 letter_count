@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-string encodeRLE(string s) {
+string change(string s) {
     string result = "";
     int n = s.size();
 
