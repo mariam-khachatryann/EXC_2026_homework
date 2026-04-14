@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int findFibIndex(long long n, long long a = 1, long long b = 1, int index = 2) {
+    if (n == 1) return 1;
+
+    long long next = a + b;
+
+    if (next == n) return index + 1;
+    if (next > n) return -1;
+
+    return findFibIndex(n, b, next, index + 1);
+}
+
+int main() {
+    cout << findFibIndex(5) << endl; 
+    cout << findFibIndex(55) << endl;  
+}
