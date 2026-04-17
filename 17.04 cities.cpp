@@ -15,7 +15,7 @@ bool exists(string name, vector<City>& cities) {
             return true;
         }
     }
-    return false; 
+    return false;
 }
 
 int main() {
@@ -72,47 +72,63 @@ int main() {
         {"Sydney", 5312000},
         {"Erevan", 1000000}
     };
+    
+    string input_city;
 
-    bool game = true;
+    string start_city = "Yerevan";
+    cout << "Computer starts: " << start_city << endl;
 
-    while (game) {
-        string input_city;
+    char last_letter = toupper(start_city.back());
 
-        while (true) {
-            cout << "Enter city: ";
+    exists(start_city, cities);
+
+    while (true) {
+        cout << "Enter a city starting with: " << last_letter << endl;
+
+        getline(cin, input_city);
+
+        if (input_city.size() == 0) {
             getline(cin, input_city);
+        }
 
-            if (input_city == "Finish") {
-                game = false;
-                break;
-            }
+        input_city[0] = toupper(input_city[0]);
 
-            if (exists(input_city, cities)) {
-                break;
-            } else {
-                cout << "Try again!" << endl;
+        if (toupper(input_city[0]) != last_letter) {
+            cout << "Wrong letter! Try again." << endl;
+            continue;
+        }
+
+        if (exists(input_city, cities) == false) {
+            cout << "City not found or already used. Try again." << endl;
+            continue;
+        }
+
+        last_letter = toupper(input_city.back());
+
+        int best_index = -1;
+        int max_population = -1;
+
+        for (int i = 0; i < cities.size(); i++) {
+            if (toupper(cities[i].name[0]) == last_letter) {
+                if (cities[i].population > max_population) {
+                    max_population = cities[i].population;
+                    best_index = i;
+                }
             }
         }
 
-        if (!game) {
+        if (best_index == -1) {
+            cout << "You win! Computer can't find a city." << endl;
             break;
         }
 
-        char last_letter = toupper(input_city.back());
-        bool found = false;
+        string comp_city = cities[best_index].name;
+        cout << "Computer: " << comp_city << endl;
 
-        for (int i = 0; i < cities.size(); i++) {
-            if (cities[i].name[0] == last_letter) {
-                cout << cities[i].name << endl;
-                cities.erase(cities.begin() + i);
-                found = true;
-                break;
-            }
-        }
+        last_letter = toupper(comp_city.back());
 
-        if (!found) {
-            cout << "You win!" << endl;
-            game = false;
-        }
+        cities.erase(cities.begin() + best_index);
     }
+
+    return 0;
 }
